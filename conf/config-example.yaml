@@ -1,11 +1,7 @@
 # Log configuration
 log:
-  # Log level
   level: info
-  # Log format
   format: text
-  # Log file path
-  # filePath:
 
 # Metrics configuration
 metrics:
@@ -490,7 +486,8 @@ targets:
     bucket:
       name: super-bucket
       prefix:
-      region: eu-west-1
+      region:
+        env: REGION
       s3Endpoint:
       disableSSL: false
       # s3MaxUploadParts: 10000
@@ -498,11 +495,11 @@ targets:
       # s3UploadConcurrency: 5
       # s3UploadLeavePartsOnError: false
       # s3ListMaxKeys: 1000
-      # credentials:
-      #   accessKey:
-      #     env: AWS_ACCESS_KEY_ID
-      #   secretKey:
-      #     path: secret_key_file
+      credentials:
+        accessKey:
+          env: AWS_ACCESS_KEY_ID
+        secretKey:
+          path: secret_key_file
       # requestConfig:
       #   listHeaders:
       #     Accept-Encoding: gzip

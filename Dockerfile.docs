@@ -1,6 +1,0 @@
-FROM squidfunk/mkdocs-material:9.6.11
-
-# renovate: datasource=pypi depName=mkdocs-awesome-pages-plugin
-ENV MKDOCS_AWESOME_PAGES_PLUGIN_VERSION="2.10.1"
-
-RUN pip install mkdocs-awesome-pages-plugin==${MKDOCS_AWESOME_PAGES_PLUGIN_VERSION}
