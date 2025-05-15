@@ -44,7 +44,7 @@ RUN apt-get update \
 
 COPY --from=builder /src/bin/s3-proxy /usr/local/bin/s3-proxy
 COPY --from=builder --chown=s3proxy:s3proxy /src/templates /templates
-
+WORKDIR /runtime
+RUN mkdir conf/
 USER s3proxy:s3proxy
-
 ENTRYPOINT ["s3-proxy"]
