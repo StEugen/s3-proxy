@@ -401,7 +401,21 @@ func (bri *bucketReqImpl) Put(ctx context.Context, inp *PutInput) {
 		// Stop
 		return
 	}
+	// -- Folder Existence Check --
+	if slashIdx := strings.LastIndex(key, "/"); slashIdx != -1 {
+		parentFolderKey := key[:slashIdx+1]
+		client := bri.s3ClientManager.GetClientForTarget(bri.targetCfg.Name)
 
+		_, _, err := client.HeadObject(ctx, parentFolderKey)
+		if err != nil {
+			if errors.Is(err, s3client.ErrNotFound) {
+				resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("parent folder %q does not exist", parentFolderKey))
+			} else {
+				resHan.InternalServerError(bri.LoadFileContent, err)
+			}
+			return
+		}
+	}
 	// Create input
 	input := &s3client.PutInput{
 		Key:         key,
