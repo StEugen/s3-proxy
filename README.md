@@ -34,6 +34,11 @@
 
 And many others.
 
+## StEugen's Fork Features
+
+- Default disabled upload to root ("/")
+- Default disable upload if key (folder) doesn't exist
+
 ## Documentation
 
 There is an online documentation generated for this project.

@@ -401,6 +401,13 @@ func (bri *bucketReqImpl) Put(ctx context.Context, inp *PutInput) {
 		// Stop
 		return
 	}
+  // -- Disable root upload or empty key -- 
+  trimmedKey := strings.Trim(key, "/")
+
+  if trimmedKey == "" || !strings.Contains(trimmedKey, "/") {
+	  resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("upload to root path is not allowed"))
+	  return
+  }
 	// -- Folder Existence Check --
 	if slashIdx := strings.LastIndex(key, "/"); slashIdx != -1 {
 		parentFolderKey := key[:slashIdx+1]
@@ -409,7 +416,7 @@ func (bri *bucketReqImpl) Put(ctx context.Context, inp *PutInput) {
 		_, _, err := client.HeadObject(ctx, parentFolderKey)
 		if err != nil {
 			if errors.Is(err, s3client.ErrNotFound) {
-				resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("parent folder %q does not exist", parentFolderKey))
+				resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("Key is invalid"))
 			} else {
 				resHan.InternalServerError(bri.LoadFileContent, err)
 			}
