@@ -405,7 +405,7 @@ func (bri *bucketReqImpl) Put(ctx context.Context, inp *PutInput) {
   trimmedKey := strings.Trim(key, "/")
 
   if trimmedKey == "" || !strings.Contains(trimmedKey, "/") {
-	  resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("upload to root path is not allowed"))
+	  resHan.ForbiddenError(bri.LoadFileContent, fmt.Errorf("Key is invalid"))
 	  return
   }
 	// -- Folder Existence Check --
