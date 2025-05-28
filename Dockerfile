@@ -43,7 +43,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /src/bin/s3-proxy /usr/local/bin/s3-proxy
-COPY --from=builder --chown=s3proxy:s3proxy /src/templates /templates
+COPY --from=builder --chown=s3proxy:s3proxy /src/templates /runtime/templates
 WORKDIR /runtime
 RUN mkdir conf/
 USER s3proxy:s3proxy
